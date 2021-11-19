@@ -1,3 +1,4 @@
+import logo from './logo.svg';
 import './App.css';
 
 import { useEffect, useState } from 'react';
@@ -11,8 +12,13 @@ function App() {
 
   useEffect(() => {
     async function getMessage() {
-      const { data } = await axios.get(api);
-      setMessage(data.message);
+      try {
+        const { data } = await axios.get(api);
+        setMessage(data.message);
+      } catch (error) {
+        console.error('Algo deu errado na API');
+        setMessage('deu ruim =(');
+      }
     }
     getMessage();
   }, []);
@@ -20,6 +26,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
         {message}
         <Button
           style={{
